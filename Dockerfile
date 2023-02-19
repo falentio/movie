@@ -7,7 +7,7 @@ COPY go.* .
 RUN go mod download
 
 COPY . .
-RUN go build --tags "json,vtable" -o movie ./cmd/server
+RUN go build -tags "json,vtable" -o movie ./cmd/server
 
 FROM debian:bullseye as prod
 
@@ -15,4 +15,4 @@ WORKDIR /app
 COPY --from=builder /build/movie movie
 COPY database .
 
-CMD ["sh", "-c", "movie"]
+CMD "./movie"
