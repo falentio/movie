@@ -1,0 +1,23 @@
+version: "3"
+
+dotenv:
+  - .env
+
+exclude:
+  - volume
+
+tasks:
+  scraper:
+    cmds:
+      - go run --tags="fts5,vtable" ./cmd/scraper
+
+  server:
+    cmds:
+      - go run --tags="fts5,vtable" ./cmd/server
+
+  test:
+    method: none
+    sources:
+      - "**/*.go"
+    cmds:
+      - go test --tags "fts5,vtable" -run {{default "''" .GO_TEST_FILTER}} {{.GO_TEST_FLAGS}} {{default "./..." .CLI_ARGS}}
